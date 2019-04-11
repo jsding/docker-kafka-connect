@@ -28,7 +28,7 @@ handleSignal() {
 }
 
 trap "handleSignal" SIGHUP SIGINT SIGTERM
-$CONNECT_BIN $CONNECT_CFG &
+$CONNECT_BIN $CONNECT_CFG $JOB_CFG &
 CONNECT_PID=$!
 
 wait

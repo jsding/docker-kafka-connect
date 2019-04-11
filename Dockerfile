@@ -1,4 +1,4 @@
-FROM openjdk:8
+FROM 8-jdk-alpine
 
 MAINTAINER dbface <support@dbface.com>
 
@@ -27,9 +27,8 @@ RUN set -x && \
     apk del unzip curl ca-certificates gnupg
 
 # Set env
-
 ENV PATH=$PATH:/${KAFKA_HOME}/bin \
-    CONNECT_CFG=${KAFKA_HOME}/config/connect-distributed.properties \
+    CONNECT_CFG=${KAFKA_HOME}/connectors/worker.properties \
     CONNECT_BIN=${KAFKA_HOME}/bin/connect-distributed.sh
 
 ENV JMX_PORT=9999 \

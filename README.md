@@ -1,13 +1,21 @@
 docker-kafka-connect
 ### with Docker CLI
+At host, mkdir /data/kafka/connectors
+make sub directory libs and put our custom connectors jars in host directory: /data/kafka/connectors/libs
+Put connector config in /data/kafka/connectors
+
+copy the connect-distributed.properties and put it in /data/kafka/connectors
+this will be the worker property file,
+append kafaka-mongodb-sink.properties
 
 ```shell
-$ docker run --rm --name connect \
+$ docker run --name kafka-mongodb-sink-1 \
     -p 8083:8083 \
-    -e CONNECT_BOOTSTRAP_SERVERS=kafka:9092 \
-    -e CONNECT_GROUP_ID=connect-cluster-A \
-    --link kafka:kafka dbface/kafka-connect
+    -v /data/kafka/connectors:${KAFKA_HOME}/connectors
+    -e job=kafka-mongodb-sink \
+    dbface/kafka-connect
 ```
+this will startup kafka-mongodb-sink.properties as the JOB file
 
 ## Environment Variables
 
