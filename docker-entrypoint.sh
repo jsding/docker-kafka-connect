@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 
 tag="[docker-entrypoint.sh]"
 
@@ -15,27 +15,12 @@ function error {
 set -e
 
 # Verify envs
-if [[ -z "$CONNECT_BOOTSTRAP_SERVERS" ]]; then
-  error "EMPTY ENV 'CONNECT_BOOTSTRAP_SERVERS'"; exit 1
-fi
-
-if [[ -z "$CONNECT_REST_ADVERTISED_HOST_NAME" ]]; then
-  warn "EMPTY ENV 'CONNECT_REST_ADVERTISED_HOST_NAME'"; unset $CONNECT_REST_ADVERTISED_HOST_NAME
-fi
-
-if [[ -z "$CONNECT_REST_ADVERTISED_PORT" ]]; then
-  warn "EMPTY ENV 'CONNECT_REST_ADVERTISED_PORT'"; unset $CONNECT_REST_ADVERTISED_PORT
-fi
-if [[ -z "$CONNECT_GROUP_ID" ]]; then
-  warn "EMPTY ENV 'CONNECT_GROUP_ID'. USE DEFAULT VALUE"; unset $CONNECT_GROUP_ID
-fi
-
 if [[ -z "$job" ]]; then
-  error "EMPTY ENV 'job'. USE DEFAULT VALUE"; exit 1
+  error "EMPTY ENV 'job'. exit;"; exit 1
 fi
 
 # Set JMX
-export KAFKA_JMX_OPTS="-Dcom.sun.management.jmxremote -Djava.rmi.server.hostname=${CONNECT_REST_ADVERTISED_HOST_NAME} -Dcom.sun.management.jmxremote.rmi.port=9999 -Dcom.sun.management.jmxremote.local.only=false -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false"
+export KAFKA_JMX_OPTS=""
 
 # Extend CLASSPATH for custom connectors
 export CLASSPATH=${CLASSPATH}:${KAFKA_HOME}/connectors/libs/*

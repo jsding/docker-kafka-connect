@@ -1,6 +1,7 @@
-This script helps you run kafka connect on the fly.
+Handy way to run kafka connect.
 
 ### with Docker CLI
+
 At host, mkdir /data/kafka/connectors
 make sub directory libs and put our custom connectors jars in host directory: /data/kafka/connectors/libs
 Put connector config in /data/kafka/connectors
@@ -9,10 +10,9 @@ copy the connect-distributed.properties to worker.properties and put it in /data
 this will be the worker property file,
 append kafaka-mongodb-sink.properties
 
+
 ```shell
-$ docker run --name kafka-mongodb-sink-1 \
-    -p 8083:8083 \
-    -v /data/kafka/connectors:/opt/kafka_2.12-2.2.0/connectors
+$ docker run --name kafka-mongodb-sink-1 -p 8083:8083  -v /data/kafka/connectors:/opt/kafka_2.12-2.2.0/connectors \
     -e job=kafka-mongodb-sink \
     dbface/kafka-connect
 ```
@@ -20,40 +20,7 @@ this will startup kafka-mongodb-sink.properties as the JOB file
 
 ## Environment Variables
 
-Pass env variables starting with `CONNECT_` to configure `connect-distributed.properties`.  
-For example, If you want to set `offset.flush.interval.ms=15000`, use `CONNECT_OFFSET_FLUSH_INTERVAL_MS=15000`
-
-- (**required**) `CONNECT_BOOTSTRAP_SERVERS`
-- (*recommended*): `CONNECT_GROUP_ID` (default value: `connect-cluster`) 
-- (*recommended*) `CONNECT_REST_ADVERTISED_HOST_NAME`
-- (*recommended*) `CONNECT_REST_ADVERTISED_PORT`
+Edit the worker.properties file in docker host(/data/kafka/connectors/worker.properties)
 
 Other connect configuration fields are optional. (see also [Kafka Connect Configs](http://kafka.apache.org/documentation.html#connectconfigs))
 
-## How To Extend This Image
-
-If you want to run additional connectors, add connector JARs to `${KAFKA_HOME}/connectors` in container.
-
-```
-FROM 1ambda/kafka-connect:latest
-
-# same as `cp -R connectors/ $KAFKA_HOME/`
-# the entrypoint will extends `$CLASSPATH` 
-# like `export CLASSPATH=${CLASSPATH}:${KAFKA_HOME}/connectors/*`
-
-COPY connectors $KAFKA_HOME/connectors
-```
-
-## Development
-
-- **SCALA_VERSION**: `2.11` 
-- **KAFKA_VERSION**: `0.10.0.0`
-- **KAFKA_HOME**: `/opt/kafka_${SCALA_VERSION}-${KAFKA_VERSION}`
-- **CONNECT_CFG**: `${KAFKA_HOME}/config/connect-distributed.properties`
-- **CONNECT_BIN**: `${KAFKA_HOME}/bin/connect-distributed.sh`
-- **CONNECT_PORT**: `8083` (exposed)
-- **JMX_PORT**: `9999` (exposed)
- 
-# License
-
-Apache 2.0
