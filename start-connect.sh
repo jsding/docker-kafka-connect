@@ -1,5 +1,4 @@
-#!/usr/bin/env bash
-
+#!/usr/bin/env sh
 tag="[start-connect.sh]"
 
 function info {

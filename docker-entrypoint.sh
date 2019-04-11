@@ -25,7 +25,8 @@ export KAFKA_JMX_OPTS=""
 # Extend CLASSPATH for custom connectors
 export CLASSPATH=${CLASSPATH}:${KAFKA_HOME}/connectors/libs/*
 
-$JOB_CFG="${KAFKA_HOME}/connectors/${job}.properties"
+JOB_CFG=${KAFKA_HOME}/connectors/${job}.properties
+
 info "Execute JOB: ${JOB_CFG}"
 
 # Configure properties

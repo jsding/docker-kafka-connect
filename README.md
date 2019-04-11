@@ -12,9 +12,7 @@ append kafaka-mongodb-sink.properties
 
 
 ```shell
-$ docker run --name kafka-mongodb-sink-1 -p 8083:8083  -v /data/kafka/connectors:/opt/kafka_2.12-2.2.0/connectors \
-    -e job=kafka-mongodb-sink \
-    dbface/kafka-connect
+$ docker run --name kafka-file-sink -p 8083:8083  -v /data/kafka-mongodb-sink:/opt/kafka_2.12-2.2.0/connectors -e job=connect-file-sink dbface/kafka-connect
 ```
 this will startup kafka-mongodb-sink.properties as the JOB file
 
