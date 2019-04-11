@@ -1,9 +1,8 @@
 FROM openjdk:8-jdk-alpine
 
-MAINTAINER dbface <support@dbface.com>
+LABEL maintainer dbface <support@dbface.com>
 
 # Install kafka
-
 ENV SCALA_VERSION="2.12" \
     KAFKA_VERSION="2.2.0"
 ENV KAFKA_HOME=/opt/kafka_${SCALA_VERSION}-${KAFKA_VERSION}
@@ -25,6 +24,8 @@ RUN set -x && \
     tar xfz /tmp/${KAFKA_DIST_TGZ} -C /opt && \
     rm /tmp/${KAFKA_DIST_TGZ} && \
     apk del unzip curl ca-certificates gnupg
+
+RUN apk add --no-cache bash coreutils su-exec
 
 # Set env
 ENV PATH=$PATH:/${KAFKA_HOME}/bin \
