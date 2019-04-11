@@ -1,4 +1,4 @@
-FROM 8-jdk-alpine
+FROM openjdk:8-jdk-alpine
 
 MAINTAINER dbface <support@dbface.com>
 
