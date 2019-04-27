@@ -30,7 +30,7 @@ RUN apk add --no-cache bash coreutils su-exec
 # Set env
 ENV PATH=$PATH:/${KAFKA_HOME}/bin \
     CONNECT_CFG=${KAFKA_HOME}/connectors/worker.properties \
-    CONNECT_BIN=${KAFKA_HOME}/bin/connect-distributed.sh
+    CONNECT_BIN=${KAFKA_HOME}/bin/connect-standalone.sh
 
 ENV JMX_PORT=9999 \
     CONNECT_PORT=8083
